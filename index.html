@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html　lang="ja">
+<head>
+<meta charset="UTF-8">
+    
+<pre class="lang:js decode:true"> 
+    
+    <h1 id="subject"></h1>
+<p>&nbsp;</p>
+<form name="typing"><input name="input" type="text" /> <input name="btn" type="button" value="送信" /></form>
+<p>&nbsp;</p>
+<p id="timer">制限時間：10秒</p>
+<p>&nbsp;</p>
+
+</pre>
+
+<script>
+    
+const subject = document.getElementById('subject');
+const timer = document.getElementById('timer');
+const form = document.forms.typing;
+const textList = [
+    "かつて幸せになるために作られたレールが今この国の閉塞感に繋がっている",
+    "ステーキと気候変動の関連がニュースになるなら環境問題を考えるいいきっかけになる",
+    "どういう意味かを説明すること自体がセクシーではない。ヤボな説明はいらない",
+    "毎日でも食べたいということは毎日でも食べているというわけではないです",
+    "プラスチックの原料って石油なんですよね。これ以外に知られていない",
+];
+    
+let TIME = 120;
+let count = 0;
+let state = true;
+ 
+const countdown = setInterval(function() {
+  timer.textContent = '制限時間：' + --TIME + '秒';
+  if(TIME <= 0) finish();
+}, 1000);
+    form.btn.addEventListener('click', function(e) {
+  if(!state) return;
+ 
+  if(form.input.value === subject.textContent) {
+    count++;
+    init();
+  } else {
+    subject.textContent = '間違いです！';
+    setTimeout(function(){ init() },1000)
+  }
+});
+ 
+init();
+ 
+function init() {
+  const rnd = Math.floor(Math.random() * textList.length);
+ 
+    subject.textContent = textList[rnd];
+  form.input.value = '';
+  form.input.focus();
+}
+    
+    
+function finish() {
+  clearInterval(countdown);
+  subject.textContent = '正解数は' + count + '個でした！';
+  state = false;
+}
+     </script>
+    
+    </head>
+</html>
+    
